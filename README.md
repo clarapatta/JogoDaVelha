@@ -1,50 +1,85 @@
-# Welcome to your Expo app 👋
+# 🎮 Jogo da Velha em React Native
 
-This is an [Expo](https://expo.dev) project created with [`create-expo-app`](https://www.npmjs.com/package/create-expo-app).
+Este é um projeto de **Jogo da Velha** desenvolvido em **React Native** com **Expo**.  
+O objetivo é criar uma experiência simples e divertida, com interface inspirada em um **quadro de giz**, utilizando uma paleta de cores personalizada.
 
-## Get started
+---
 
-1. Install dependencies
+## 📌 Funcionalidades
 
+- 🎯 **Tabuleiro interativo** 3x3.
+- 🔄 **Alternância de jogadores** entre "X" e "O".
+- 🏆 **Verificação automática** de vencedor ou empate.
+- 🎨 **Paleta de cores personalizada** para cada jogador e interface.
+- 🧹 **Botão para reiniciar** o jogo.
+- ⬅ **Botão para voltar** à tela inicial (usando `expo-router`).
+
+---
+
+## 🛠 Tecnologias Utilizadas
+
+- **[React Native](https://reactnative.dev/)**
+- **[Expo](https://expo.dev/)**
+- **JavaScript (ES6+)**
+- **expo-router** para navegação
+
+---
+
+## 🎨 Paleta de Cores
+
+| Nome              | Código Hex |
+|-------------------|------------|
+| Preto Giz         | `#1C1C1C`  |
+| Cinza Giz Claro   | `#DADADA`  |
+| Cinza Azulado     | `#2C3E50`  |
+| Giz Rosa Antigo   | `#E26A6A`  |
+| Amarelo Pastel    | `#F1C40F`  |
+| Verde Giz         | `#27AE60`  |
+
+---
+
+## 📂 Estrutura do Projeto
+
+```
+📦 projeto-jogo-da-velha
+ ┣ 📜 App.js / index.js
+ ┣ 📜 PInicial.js
+ ┣ 📂 assets/
+ ┣ 📂 node_modules/
+ ┣ 📜 package.json
+ ┣ 📜 README.md
+```
+
+---
+
+## 🚀 Como Executar o Projeto
+
+1. **Clonar o repositório**
+   ```bash
+   git clone https://github.com/seu-usuario/jogo-da-velha.git
+   cd jogo-da-velha
+   ```
+
+2. **Instalar dependências**
    ```bash
    npm install
    ```
 
-2. Start the app
-
+3. **Iniciar o projeto**
    ```bash
    npx expo start
    ```
 
-In the output, you'll find options to open the app in a
+4. **Abrir no celular**
+   - Instale o aplicativo **Expo Go** no seu smartphone.
+   - Escaneie o QR Code gerado no terminal ou na aba do navegador.
 
-- [development build](https://docs.expo.dev/develop/development-builds/introduction/)
-- [Android emulator](https://docs.expo.dev/workflow/android-studio-emulator/)
-- [iOS simulator](https://docs.expo.dev/workflow/ios-simulator/)
-- [Expo Go](https://expo.dev/go), a limited sandbox for trying out app development with Expo
+---
 
-You can start developing by editing the files inside the **app** directory. This project uses [file-based routing](https://docs.expo.dev/router/introduction).
+## 📜 Como Jogar
 
-## Get a fresh project
-
-When you're ready, run:
-
-```bash
-npm run reset-project
-```
-
-This command will move the starter code to the **app-example** directory and create a blank **app** directory where you can start developing.
-
-## Learn more
-
-To learn more about developing your project with Expo, look at the following resources:
-
-- [Expo documentation](https://docs.expo.dev/): Learn fundamentals, or go into advanced topics with our [guides](https://docs.expo.dev/guides).
-- [Learn Expo tutorial](https://docs.expo.dev/tutorial/introduction/): Follow a step-by-step tutorial where you'll create a project that runs on Android, iOS, and the web.
-
-## Join the community
-
-Join our community of developers creating universal apps.
-
-- [Expo on GitHub](https://github.com/expo/expo): View our open source platform and contribute.
-- [Discord community](https://chat.expo.dev): Chat with Expo users and ask questions.
+1. O jogador **X** começa.
+2. Toque em uma célula vazia para marcar sua jogada.
+3. O jogo alterna automaticamente para o próximo jogador.
+4. Quando houver um vencedor ou empate, uma mensagem será exibida.
+5. Toque no botão **Resetar** para começar uma nova partida.
