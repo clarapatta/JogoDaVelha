@@ -1,75 +1,187 @@
-import { Image } from 'expo-image';
-import { Platform, StyleSheet } from 'react-native';
+import { View, Text, StyleSheet, Pressable, Modal, ScrollView, ImageBackground, Image } from 'react-native';
+import { useState } from 'react';
+import { router } from 'expo-router';
 
-import { HelloWave } from '@/components/HelloWave';
-import ParallaxScrollView from '@/components/ParallaxScrollView';
-import { ThemedText } from '@/components/ThemedText';
-import { ThemedView } from '@/components/ThemedView';
+// Objeto com a paleta de cores para fácil referência
+const colors = {
+  pretoGiz: '#1C1C1C',
+  cinzaGizClaro: '#DADADA',
+  cinzaAzulado: '#2C3E50',
+  gizRosaAntigo: '#E26A6A',
+  amareloPastel: '#F1C40F',
+};
 
 export default function HomeScreen() {
+  const [modalVisible, setModalVisible] = useState(false);
+
   return (
-    <ParallaxScrollView
-      headerBackgroundColor={{ light: '#A1CEDC', dark: '#1D3D47' }}
-      headerImage={
-        <Image
-          source={require('@/assets/images/partial-react-logo.png')}
-          style={styles.reactLogo}
-        />
-      }>
-      <ThemedView style={styles.titleContainer}>
-        <ThemedText type="title">Welcome!</ThemedText>
-        <HelloWave />
-      </ThemedView>
-      <ThemedView style={styles.stepContainer}>
-        <ThemedText type="subtitle">Step 1: Try it</ThemedText>
-        <ThemedText>
-          Edit <ThemedText type="defaultSemiBold">app/(tabs)/index.tsx</ThemedText> to see changes.
-          Press{' '}
-          <ThemedText type="defaultSemiBold">
-            {Platform.select({
-              ios: 'cmd + d',
-              android: 'cmd + m',
-              web: 'F12',
-            })}
-          </ThemedText>{' '}
-          to open developer tools.
-        </ThemedText>
-      </ThemedView>
-      <ThemedView style={styles.stepContainer}>
-        <ThemedText type="subtitle">Step 2: Explore</ThemedText>
-        <ThemedText>
-          {`Tap the Explore tab to learn more about what's included in this starter app.`}
-        </ThemedText>
-      </ThemedView>
-      <ThemedView style={styles.stepContainer}>
-        <ThemedText type="subtitle">Step 3: Get a fresh start</ThemedText>
-        <ThemedText>
-          {`When you're ready, run `}
-          <ThemedText type="defaultSemiBold">npm run reset-project</ThemedText> to get a fresh{' '}
-          <ThemedText type="defaultSemiBold">app</ThemedText> directory. This will move the current{' '}
-          <ThemedText type="defaultSemiBold">app</ThemedText> to{' '}
-          <ThemedText type="defaultSemiBold">app-example</ThemedText>.
-        </ThemedText>
-      </ThemedView>
-    </ParallaxScrollView>
+    <ImageBackground
+      source={require('../../assets/images/background.png')}
+      style={styles.container}
+      resizeMode="cover"
+    >
+      <View style={styles.overlay}>
+        {/* --- Modal de Regras (Estilos também atualizados) --- */}
+        <Modal
+          animationType="slide"
+          transparent={true}
+          visible={modalVisible}
+          onRequestClose={() => setModalVisible(!modalVisible)}
+        >
+          <View style={styles.centeredView}>
+            <View style={styles.modalView}>
+              <Text style={styles.modalTitle}>Regras do Jogo</Text>
+              <ScrollView style={{ width: '100%' }}>
+                <Text style={styles.modalSectionTitle}>Objetivo</Text>
+                <Text style={styles.modalText}>
+                  Seja o primeiro jogador a alinhar três dos seus símbolos ('X' ou 'O') em uma linha reta, seja ela horizontal, vertical ou na diagonal.
+                </Text>
+
+                <Text style={styles.modalSectionTitle}>Como Jogar</Text>
+                <Text style={styles.modalText}>
+                  1. O jogo é disputado entre dois jogadores: 'X' e 'O'. {'\n'}
+                  2. O jogador 'X' sempre começa a partida.{'\n'}
+                  3. Os jogadores alternam os turnos, tocando em uma casa vazia para colocar seu símbolo.{'\n'}
+                  4. Se todas as casas forem preenchidas sem um vencedor, o jogo termina em empate.
+                </Text>
+
+                <Text style={styles.modalSectionTitle}>Controles</Text>
+                <Text style={styles.modalText}>
+                  • <Text style={{ fontWeight: 'bold' }}>Resetar:</Text> Limpa o tabuleiro para iniciar uma nova partida.{'\n'}
+                  • <Text style={{ fontWeight: 'bold' }}>Voltar:</Text> Retorna para a tela de início.
+                </Text>
+              </ScrollView>
+              <Pressable
+                style={[styles.button, styles.buttonClose]}
+                onPress={() => setModalVisible(!modalVisible)}
+              >
+                <Text style={styles.buttonText}>Fechar</Text>
+              </Pressable>
+            </View>
+          </View>
+        </Modal>
+
+        {/* --- Conteúdo da Tela Principal --- */}
+        <Text style={styles.title}>Bem-vindo ao <Text style={styles.highlight}>Nexus XO</Text></Text>
+        <Text style={styles.subtitle}>O clássico jogo da velha reinventado!</Text>
+        <Image source={require('../../assets/images/icon1.png')} style={styles.logo} />
+        <Pressable style={styles.button} onPress={() => router.push("/PInicial")}>
+          <Text style={styles.buttonText}>Iniciar Jogo</Text>
+        </Pressable>
+        <Pressable style={styles.rulesButton} onPress={() => setModalVisible(true)}>
+          <Text style={styles.rulesButtonText}>Como Jogar?</Text>
+        </Pressable>
+        <Text style={styles.footerText}> © 2025 Patta</Text>
+      </View>
+    </ImageBackground>
   );
 }
 
 const styles = StyleSheet.create({
-  titleContainer: {
-    flexDirection: 'row',
+  container: {
+    flex: 1,
+    backgroundColor: colors.pretoGiz, // Cor de fundo base
+  },
+  overlay: {
+    flex: 1,
+    backgroundColor: 'rgba(28, 28, 28, 0.5)', // Overlay para escurecer a imagem e melhorar a leitura
     alignItems: 'center',
-    gap: 8,
+    justifyContent: 'center',
+    padding: 20,
   },
-  stepContainer: {
-    gap: 8,
-    marginBottom: 8,
+  logo: {
+    width: 120,
+    height: 120,
+    marginBottom: 30,
   },
-  reactLogo: {
-    height: 178,
-    width: 290,
-    bottom: 0,
-    left: 0,
+  title: {
+    fontSize: 32,
+    color: colors.cinzaGizClaro, // Cor principal de texto
+    fontWeight: 'bold',
+    marginBottom: 10,
+    textAlign: 'center',
+  },
+  highlight: {
+    color: colors.amareloPastel, // Destaque com Amarelo Pastel
+  },
+  subtitle: {
+    fontSize: 18,
+    color: colors.cinzaGizClaro, // Cor secundária de texto
+    marginBottom: 40,
+    textAlign: 'center',
+  },
+  footerText: {
+    fontSize: 14,
+    color: colors.cinzaGizClaro,
     position: 'absolute',
+    bottom: 20,
+  },
+  button: {
+    backgroundColor: colors.gizRosaAntigo, // Botão de ação principal
+    paddingVertical: 15,
+    paddingHorizontal: 40,
+    borderRadius: 8,
+    width: '80%',
+    alignItems: 'center',
+  },
+  buttonText: {
+    color: colors.cinzaGizClaro, // Texto do botão
+    fontSize: 18,
+    fontWeight: '600',
+  },
+  rulesButton: {
+    marginTop: 20,
+    paddingVertical: 10,
+    paddingHorizontal: 30,
+  },
+  rulesButtonText: {
+    color: colors.cinzaGizClaro, // Texto secundário
+    fontSize: 16,
+    textDecorationLine: 'underline',
+  },
+  // Estilos do Modal com a nova paleta
+  centeredView: {
+    flex: 1,
+    justifyContent: 'center',
+    alignItems: 'center',
+    backgroundColor: 'rgba(0, 0, 0, 0.7)',
+  },
+  modalView: {
+    margin: 20,
+    width: '90%',
+    maxHeight: '80%',
+    backgroundColor: colors.cinzaGizClaro, // Fundo claro para o modal
+    borderRadius: 10,
+    padding: 25,
+    alignItems: 'center',
+    shadowColor: '#000',
+    shadowOffset: { width: 0, height: 2 },
+    shadowOpacity: 0.25,
+    shadowRadius: 4,
+    elevation: 5,
+  },
+  modalTitle: {
+    fontSize: 22,
+    fontWeight: 'bold',
+    marginBottom: 15,
+    color: colors.pretoGiz, // Texto escuro no modal claro
+  },
+  modalSectionTitle: {
+    fontSize: 18,
+    fontWeight: 'bold',
+    color: colors.cinzaAzulado, // Tom complementar para seções
+    marginTop: 10,
+    alignSelf: 'flex-start',
+  },
+  modalText: {
+    fontSize: 16,
+    color: colors.pretoGiz, // Texto principal do modal
+    marginBottom: 15,
+    alignSelf: 'flex-start',
+    lineHeight: 22,
+  },
+  buttonClose: {
+    backgroundColor: colors.gizRosaAntigo, // Botão consistente
+    marginTop: 20,
   },
 });
